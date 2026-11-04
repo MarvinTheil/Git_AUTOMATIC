@@ -21,7 +21,7 @@
         </div>
         <canvas id="camerafeed" style="width:100vw;height:100vh;position:absolute;left:0;top:0;z-index:-100;"></canvas>
     </div>
-    <script src="Build/Test_01.loader.js"></script>
+    <script src="Build/Test_02.loader.js"></script>
     <script>
 
             const onxrloaded = () => {
@@ -40,9 +40,9 @@
                 canvas.style.height = window.innerHeight + "px";
                 
                 createUnityInstance(document.querySelector("#unity-canvas"), {
-                    dataUrl: "Build/Test_01.data",
-                    frameworkUrl: "Build/Test_01.framework.js",
-                    codeUrl: "Build/Test_01.wasm",
+                    dataUrl: "Build/Test_02.data",
+                    frameworkUrl: "Build/Test_02.framework.js",
+                    codeUrl: "Build/Test_02.wasm",
                     streamingAssetsUrl: "StreamingAssets",
                     companyName: "DefaultCompany",
                     productName: "Unity_Automatic_AR",
