@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content='width=device-width, height=device-height, initial-scale=1.0, minimum-scale=1.0, user-scalable=no, shrink-to-fit=yes'>
+    <title>Unity WebGL Player | Unity_Automatic_AR</title>
+    <link rel="stylesheet" href="TemplateData/style.css">
+
+    <script src="./xr-standalone/xr.js" data-preload-chunks="slam"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@8thwall/xrextras@1/dist/xrextras.js" crossorigin="anonymous"></script>
+    <script src="./wtrackerv8.js"></script>
+</head>
+<body>
+    <div id="unity-container" class="unity-mobile">
+        <canvas id="unity-canvas" style="width: 100%; height: 100%; background: #0000; z-index: -99"></canvas>
+        <div id="unity-loading-bar">
+            <div id="unity-logo"></div>
+            <div id="unity-progress-bar-empty">
+                <div id="unity-progress-bar-full"></div>
+            </div>
+        </div>
+        <canvas id="camerafeed" style="width:100vw;height:100vh;position:absolute;left:0;top:0;z-index:-100;"></canvas>
+    </div>
+    <script src="Build/Test_01.loader.js"></script>
+    <script>
+
+            const onxrloaded = () => {
+                StartUnity();
+            }
+
+            window.XR8 ? onxrloaded() : window.addEventListener('xrloaded', onxrloaded)
+            
+
+            var container = document.querySelector("#unity-container");
+            var canvas = document.querySelector("#unity-canvas");
+            var loadingBar = document.querySelector("#unity-loading-bar");
+            var progressBarFull = document.querySelector("#unity-progress-bar-full");
+            function StartUnity() {
+                canvas.style.width = window.innerWidth + "px";
+                canvas.style.height = window.innerHeight + "px";
+                
+                createUnityInstance(document.querySelector("#unity-canvas"), {
+                    dataUrl: "Build/Test_01.data",
+                    frameworkUrl: "Build/Test_01.framework.js",
+                    codeUrl: "Build/Test_01.wasm",
+                    streamingAssetsUrl: "StreamingAssets",
+                    companyName: "DefaultCompany",
+                    productName: "Unity_Automatic_AR",
+                    productVersion: "0.1.0",
+                    //webglContextAttributes: { "preserveDrawingBuffer": true },
+                    // matchWebGLToCanvasSize: false, // Uncomment this to separately control WebGL canvas render size and DOM element size.
+                    // devicePixelRatio: 1, // Uncomment this to override low DPI rendering on high DPI displays.
+                    },
+                    (progress) => {
+                        progressBarFull.style.width = 100 * progress + "%";
+                    }
+                ).then((unityInstance) => {
+                    window.unityInstance = unityInstance;
+                    loadingBar.style.display = "none";
+                });
+                loadingBar.style.display = "block";
+            }
+    </script>
+</body>
+</html>
